@@ -1,0 +1,114 @@
+@use "sass:list";
+
+/* Scroll
+------------------------- */
+@mixin custom-scroll($thumb-color: #999, $track-color: transparent, $width: 6px) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: 4px;
+  }
+}
+
+/* Transition
+------------------------- */
+@mixin transition($property: all, $duration: 0.3s, $timing-function: ease, $delay: 0s) {
+  transition: $property $duration $timing-function $delay;
+}
+
+/* Text overflow
+------------------------- */
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Input placeholder
+------------------------- */
+@mixin input-placeholder {
+  &::placeholder {
+    @content;
+  }
+
+  &:focus::placeholder {
+    @content;
+  }
+
+  &:hover::placeholder {
+    @content;
+  }
+}
+
+/* Z-index
+------------------------- */
+@function z-index($name) {
+  @if list.index($z-indexes, $name) {
+    @return (list.length($z-indexes) - list.index($z-indexes, $name)) + 1;
+  } @else {
+    @warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
+
+    @return null;
+  }
+}
+
+$z-indexes: ("outdated-browser", "modal", "site-header", "page-wrapper", "site-footer");
+
+/* Flex
+------------------------- */
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: wrap) {
+  align-items: $align;
+  display: flex;
+  flex-flow: $direction $wrap;
+  justify-content: $justify;
+}
+
+@mixin flex-center($direction: row) {
+  @include flex($direction, center, center);
+}
+
+/*  Grid
+------------------------- */
+@mixin grid($columns: 1, $gap: 20px) {
+  display: grid;
+  grid-gap: $gap;
+  grid-template-columns: repeat($columns, 1fr);
+}
+
+/*  Visibility
+------------------------- */
+@mixin visually-hidden {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/*  Aspect ratio
+------------------------- */
+@mixin aspect-ratio($width, $height) {
+  width: 100%;
+  position: relative;
+  padding-top: calc(#{$height} / #{$width} * 100%);
+
+  & > * {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

@@ -1,0 +1,54 @@
+.form-item {
+  display: inline-block;
+  position: relative;
+
+  $this: &;
+
+  &__checkbox-element {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #000000;
+    display: inline-block;
+    cursor: pointer;
+    @include transition;
+  }
+
+  &__radio-element {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+
+    &::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #ff0000;
+      display: block;
+      position: absolute;
+      opacity: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      @include transition;
+    }
+  }
+
+  &__checkbox-input:checked + #{$this}__checkbox-element {
+    background-color: #ff0000;
+  }
+
+  &__radio-input:checked + #{$this}__radio-element::before {
+    opacity: 1;
+  }
+
+  &__error {
+    font-size: 12px;
+    color: #ff0000;
+    margin-top: 5px;
+  }
+}

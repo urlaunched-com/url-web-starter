@@ -1,0 +1,206 @@
+{
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "@feature-sliced/eslint-config/rules/import-order/experimental",
+    "@feature-sliced/eslint-config/rules/public-api",
+    "@feature-sliced/eslint-config/rules/layers-slices",
+    "prettier",
+    "plugin:@next/next/recommended",
+    "plugin:local-rules/all"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "plugins": [
+    "local-rules",
+    "react",
+    "jsx-a11y",
+    "react-hooks",
+    "unused-imports"
+  ],
+  "ignorePatterns": [
+    "/public/scripts/**.js"
+  ],
+  "rules": {
+    "import/extensions": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-no-useless-fragment": "warn",
+    "new-cap": "warn",
+    "no-unused-expressions": "warn",
+    "jsx-a11y/label-has-associated-control": "off",
+    "import/no-named-default": "warn",
+    "no-promise-executor-return": "warn",
+    "import/order": "warn",
+    "import/no-internal-modules": "off",
+    "boundaries/element-types": "warn",
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [
+          ".ts",
+          ".js",
+          ".jsx",
+          ".tsx"
+        ]
+      }
+    ],
+    "jsx-a11y/alt-text": [
+      2,
+      {
+        "elements": [
+          "img",
+          "object",
+          "area",
+          "input[type=\"image\"]"
+        ],
+        "img": [
+          "Image"
+        ],
+        "object": [
+          "Object"
+        ],
+        "area": [
+          "Area"
+        ],
+        "input[type=\"image\"]": [
+          "InputImage"
+        ]
+      }
+    ],
+    "camelcase": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "no-unused-vars": "off",
+    "react/require-default-props": "off",
+    "consistent-return": "off",
+    "comma-dangle": [
+      "warn",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "never"
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+    "no-shadow": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-underscore-dangle": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-param-reassign": "warn",
+    "react/jsx-no-bind": "warn",
+    "react/no-array-index-key": "warn",
+    "arrow-body-style": "off",
+    "no-undef": "error",
+    "react/no-unstable-nested-components": "warn",
+    "react/button-has-type": "off",
+    "object-curly-newline": "off",
+    "operator-linebreak": [
+      "error",
+      "none",
+      {
+        "overrides": {
+          "=": "after",
+          "?": "before",
+          ":": "before",
+          "&&": "after",
+          "||": "after"
+        }
+      }
+    ],
+    "no-control-regex": 0,
+    "react/jsx-max-props-per-line": [
+      "error",
+      {
+        "maximum": 5
+      }
+    ],
+    "no-multiple-empty-lines": [
+      2,
+      {
+        "max": 1
+      }
+    ],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "linebreak-style": "off",
+    "react/jsx-wrap-multilines": [
+      "error",
+      {
+        "declaration": "parens",
+        "assignment": "parens",
+        "return": "parens",
+        "arrow": "parens",
+        "condition": "ignore",
+        "logical": "ignore",
+        "prop": "ignore"
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "ignoreComments": true,
+        "code": 120
+      }
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "indent": [
+      "error",
+      2,
+      {
+        "ignoredNodes": [
+          "TemplateLiteral"
+        ],
+        "SwitchCase": 1
+      }
+    ],
+    "react/jsx-boolean-value": [
+      "error",
+      "never"
+    ],
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "never",
+        "children": "ignore"
+      }
+    ],
+    "react/jsx-no-duplicate-props": "error"
+  }
+}

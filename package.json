@@ -1,0 +1,44 @@
+{
+  "name": "url-web-starter",
+  "version": "1.0.0",
+  "description": "A CLI tool to generate web projects with support for landing pages, applications, and various customizable features like Schema.org, tests, and email templates.",
+  "main": "bin/cli.js",
+  "bin": {
+    "url-web-starter": "bin/cli.js"
+  },
+  "scripts": {
+    "start": "node bin/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/urlaunched-com/url-web-starter.git"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.4.1",
+    "typescript": "^5.4.5"
+  },
+  "author": "URLaunched LTD",
+  "license": "MIT",
+  "keywords": [
+  "nextjs",
+  "starter",
+  "landing",
+  "jest",
+  "application",
+  "cli",
+  "project-generator",
+  "figma",
+  "schema.org",
+  "email-templates",
+  "typescript"
+],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-prettier-scss"
+  ],
+  "plugins": [
+    "stylelint-selector-bem-pattern",
+    "stylelint-order"
+  ],
+  "rules": {
+    "order/properties-order": [
+      "width",
+      "height",
+      "display",
+      "font",
+      "font-family",
+      "font-size",
+      "font-weight",
+      "font-style",
+      "color",
+      "position",
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "transform",
+      "float"
+    ],
+    "color-hex-length": "long",
+    "color-hex-alpha": "never",
+    "selector-max-id": 0,
+    "selector-no-qualifying-type": null,
+    "selector-class-pattern": "^[a-z0-9\\-]+$",
+    "plugin/selector-bem-pattern": {
+      "preset": "bem",
+      "componentName": "[a-z][a-z0-9\\-]*",
+      "componentSelectors": {
+        "initial": "^\\.{componentName}(?:__[-a-z0-9\\-]+)?(?:--[-a-z0-9\\-]+)?$"
+      }
+    },
+    "font-family-no-duplicate-names": true,
+    "no-descending-specificity": true,
+    "declaration-block-no-duplicate-properties": true,
+    "block-no-empty": true,
+    "max-nesting-depth": 3,
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "import",
+          "extends",
+          "tailwind",
+          "apply",
+          "screen",
+          "variants",
+          "include",
+          "mixin",
+          "use",
+          "function",
+          "return",
+          "if",
+          "else",
+          "each",
+          "for",
+          "while",
+          "warn"
+        ]
+      }
+    ],
+    "import-notation": "string",
+    "color-named": "never",
+    "scss/operator-no-unspaced": null,
+    "scss/dollar-variable-pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$",
+    "number-max-precision": null
+  }
+}

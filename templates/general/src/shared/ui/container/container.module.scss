@@ -1,0 +1,19 @@
+.container {
+  padding: 0 15px;
+
+  @include tablet {
+    // Add tablet styles here
+  }
+
+  @include desktop {
+    // Add desktop styles here
+  }
+
+  @include large-desktop {
+    // Add large-desktop styles here
+  }
+
+  @include extra-large-desktop {
+    // Add extra-large-desktop styles here
+  }
+}

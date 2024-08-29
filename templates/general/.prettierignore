@@ -1,0 +1,4 @@
+react-email-starter
+node_modules
+.*
+tsconfig.json

@@ -1,0 +1,63 @@
+$tablet-breakpoint: 768px;
+$desktop-breakpoint: 1200px;
+$large-desktop-breakpoint: 1440px;
+$extra-large-desktop-breakpoint: 1600px;
+
+/* Mobile First Breakpoints
+------------------------- */
+
+@mixin tablet {
+  @media only screen and (min-width: $tablet-breakpoint) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: $desktop-breakpoint) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media only screen and (min-width: $large-desktop-breakpoint) {
+    @content;
+  }
+}
+
+@mixin extra-large-desktop {
+  @media only screen and (min-width: $extra-large-desktop-breakpoint) {
+    @content;
+  }
+}
+
+/* Landscape Breakpoints
+------------------------- */
+@mixin mobile-landscape {
+  @media only screen and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin tablet-landscape {
+  @media only screen and (min-width: $tablet-breakpoint) and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin desktop-landscape {
+  @media only screen and (min-width: $desktop-breakpoint) and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin large-desktop-landscape {
+  @media only screen and (min-width: $large-desktop-breakpoint) and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin extra-large-desktop-landscape {
+  @media only screen and (min-width: $extra-large-desktop-breakpoint + 1) and (orientation: landscape) {
+    @content;
+  }
+}

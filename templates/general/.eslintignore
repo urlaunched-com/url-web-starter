@@ -1,0 +1,3 @@
+src/shared/locales
+*.spec.ts
+react-email-starter
