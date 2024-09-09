@@ -153,6 +153,41 @@ inquirer.prompt(questions).then((answers) => {
             process.exit(1);
         }
     }
+
+    // Paths
+    const fontsScssPath = path.join(projectPath, 'src/core/styles/_global/_fonts.scss');
+    const typographyTypesPath = path.join(projectPath, 'src/shared/ui/typography/typography.types.ts');
+    const typographyScssPath = path.join(projectPath, 'src/shared/ui/typography/typography.module.scss');
+
+    // Step 1: Read Font Variables
+    const fontsScssContent = fs.readFileSync(fontsScssPath, 'utf8');
+    const fontVariables = fontsScssContent.match(/\$[\w-]+/g) || [];
+
+    // Step 2: Update typography.types.ts
+    let typographyTypesContent = fs.readFileSync(typographyTypesPath, 'utf8');
+    const enumStart = typographyTypesContent.indexOf('export enum ETypographyVariant {');
+    const enumEnd = typographyTypesContent.indexOf('}', enumStart) + 1;
+    const enumContent = typographyTypesContent.substring(enumStart, enumEnd);
+
+    const newEnumContent = fontVariables.reduce((acc, font) => {
+        const fontEnum = font.replace('$', '').toUpperCase().replace(/-/g, '_');
+        return acc.includes(fontEnum) ? acc : acc + `  ${fontEnum} = "${font.replace('$', '')}",\n`;
+    }, '');
+
+    const updatedEnumContent = `export enum ETypographyVariant {\n${newEnumContent}}`;
+
+    typographyTypesContent = typographyTypesContent.replace(enumContent, updatedEnumContent);
+    fs.writeFileSync(typographyTypesPath, typographyTypesContent, 'utf8');
+
+    // Step 3: Update typography.module.scss
+    let typographyScssContent = fs.readFileSync(typographyScssPath, 'utf8');
+    const newScssContent = fontVariables.reduce((acc, font) => {
+        const className = font.replace('$', '').toLowerCase().replace(/-/g, '-');
+        return acc + `&--${className} {\n  font: ${font};\n}\n`;
+    }, '');
+
+    typographyScssContent = typographyScssContent.replace(/(\.text\s*\{)([\s\S]*?)(\})/, `$1\n${newScssContent}\n$3`);
+    fs.writeFileSync(typographyScssPath, typographyScssContent, 'utf8');
 });
 
 function copyTemplateFiles(templatePath, projectPath, append = false) {

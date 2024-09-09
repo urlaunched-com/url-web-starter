@@ -1,8 +1,6 @@
 import { PropsWithChildren } from "react";
 
-export enum ETypographyVariant {
-  BODY = "body",
-}
+export enum ETypographyVariant {}
 
 type TextTags =
   | "p"
