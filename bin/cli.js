@@ -28,16 +28,20 @@ const questions = [
         choices: [
             {name: 'Schema org', value: 'needsSchema'},
             {name: 'Tests', value: 'needsTests'},
-            {name: 'Email templates', value: 'needsEmailTemplates'}
+            {name: 'Email templates', value: 'needsEmailTemplates'},
+            {name: 'Strapi', value: 'needsStrapi'} // Добавляем опцию Strapi
         ],
         when: (answers) => answers.projectType === 'Application'
     },
     {
-        type: 'confirm',
-        name: 'needsSchema',
-        message: 'Do you want to add Schema.org to your project?:',
-        when: (answers) => answers.projectType === 'Landing',
-        default: false
+        type: 'checkbox',
+        name: 'applicationFeatures',
+        message: 'Select the features needed for the application:',
+        choices: [
+            {name: 'Schema org', value: 'needsSchema'},
+            {name: 'Strapi', value: 'needsStrapi'}
+        ],
+        when: (answers) => answers.projectType === 'Landing'
     },
     {
         type: 'input',
@@ -60,10 +64,11 @@ const questions = [
 ];
 
 inquirer.prompt(questions).then((answers) => {
-    const { projectType, projectName, figmaFileId, figmaPersonalToken, applicationFeatures = [], needsSchema } = answers;
+    const {projectType, projectName, figmaFileId, figmaPersonalToken, applicationFeatures = [], needsSchema} = answers;
     const needsTests = applicationFeatures.includes('needsTests');
     const needsEmailTemplates = applicationFeatures.includes('needsEmailTemplates');
     const needsAppSchema = applicationFeatures.includes('needsSchema');
+    const needsStrapi = applicationFeatures.includes('needsStrapi'); // Проверяем, выбрана ли опция Strapi
     const templatePath = path.join(__dirname, '..', 'templates', 'general');
     const projectPath = projectName === '.' ? process.cwd() : path.join(process.cwd(), projectName);
 
@@ -115,7 +120,7 @@ inquirer.prompt(questions).then((answers) => {
 
         // Run yarn add schema-dts in the project directory
         try {
-            execSync('yarn add schema-dts', { cwd: projectPath, stdio: 'inherit' });
+            execSync('yarn add schema-dts', {cwd: projectPath, stdio: 'inherit'});
         } catch (error) {
             console.error('Error running yarn add schema-dts:', error);
             process.exit(1);
@@ -123,11 +128,11 @@ inquirer.prompt(questions).then((answers) => {
     }
 
     // Run yarn in the project directory
-    execSync('yarn', { cwd: projectPath, stdio: 'inherit' });
+    execSync('yarn', {cwd: projectPath, stdio: 'inherit'});
 
     // Ensure figma-export is installed globally
     try {
-        execSync('yarn global add figma-export-js', { stdio: 'inherit' });
+        execSync('yarn global add figma-export-js', {stdio: 'inherit'});
     } catch (error) {
         console.error('Error installing figma-export-js:', error);
         process.exit(1);
@@ -138,7 +143,7 @@ inquirer.prompt(questions).then((answers) => {
 
     // Execute figma-export command with correct working directory
     try {
-        execSync('figma-export', { cwd: projectPath, stdio: 'inherit' });
+        execSync('npx figma-export', {cwd: projectPath, stdio: 'inherit'});
     } catch (error) {
         console.error('Error executing figma-export:', error);
         process.exit(1);
@@ -147,9 +152,24 @@ inquirer.prompt(questions).then((answers) => {
     // If needsEmailTemplates is selected, run yarn create email in the project root
     if (needsEmailTemplates) {
         try {
-            execSync('yarn create email', { cwd: projectPath, stdio: 'inherit' });
+            execSync('yarn create email', {cwd: projectPath, stdio: 'inherit'});
         } catch (error) {
             console.error('Error running yarn create email:', error);
+            process.exit(1);
+        }
+    }
+
+    // If needsStrapi is selected, initialize Strapi project
+    if (needsStrapi) {
+        const strapiPath = path.join(projectPath, 'strapi');
+        if (!fs.existsSync(strapiPath)) {
+            fs.mkdirSync(strapiPath);
+        }
+        try {
+            execSync(`npx create-strapi-app ${strapiPath} --quickstart --typescript`, {stdio: 'inherit'});
+            console.log(`Strapi project ${projectName} created successfully.`);
+        } catch (error) {
+            console.error('Error initializing Strapi project:', error);
             process.exit(1);
         }
     }
@@ -206,7 +226,7 @@ function copyTemplateFiles(templatePath, projectPath, append = false) {
                 fs.writeFileSync(writePath, contents, 'utf8');
             }
         } else if (stats.isDirectory()) {
-            fs.mkdirSync(path.join(projectPath, file), { recursive: true });
+            fs.mkdirSync(path.join(projectPath, file), {recursive: true});
             copyTemplateFiles(path.join(templatePath, file), path.join(projectPath, file), append);
         }
     });
