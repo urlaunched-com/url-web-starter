@@ -5,4 +5,5 @@ import type { AppDispatch, AppStore, RootState } from "@/shared";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+// @ts-ignore
 export const useAppStore: () => AppStore = useStore;
