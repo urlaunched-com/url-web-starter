@@ -1,3 +1,4 @@
 src/shared/locales
 *.spec.ts
 react-email-starter
+axios-base-query.ts

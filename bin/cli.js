@@ -60,7 +60,7 @@ const questions = [
 ];
 
 inquirer.prompt(questions).then((answers) => {
-    const { projectType, projectName, figmaFileId, figmaPersonalToken, applicationFeatures = [], needsSchema } = answers;
+    const {projectType, projectName, figmaFileId, figmaPersonalToken, applicationFeatures = [], needsSchema} = answers;
     const needsTests = applicationFeatures.includes('needsTests');
     const needsEmailTemplates = applicationFeatures.includes('needsEmailTemplates');
     const needsAppSchema = applicationFeatures.includes('needsSchema');
@@ -115,7 +115,7 @@ inquirer.prompt(questions).then((answers) => {
 
         // Run yarn add schema-dts in the project directory
         try {
-            execSync('yarn add schema-dts', { cwd: projectPath, stdio: 'inherit' });
+            execSync('yarn add schema-dts', {cwd: projectPath, stdio: 'inherit'});
         } catch (error) {
             console.error('Error running yarn add schema-dts:', error);
             process.exit(1);
@@ -123,11 +123,11 @@ inquirer.prompt(questions).then((answers) => {
     }
 
     // Run yarn in the project directory
-    execSync('yarn', { cwd: projectPath, stdio: 'inherit' });
+    execSync('yarn', {cwd: projectPath, stdio: 'inherit'});
 
     // Ensure figma-export is installed globally
     try {
-        execSync('yarn global add figma-export-js', { stdio: 'inherit' });
+        execSync('yarn global add figma-export-js', {stdio: 'inherit'});
     } catch (error) {
         console.error('Error installing figma-export-js:', error);
         process.exit(1);
@@ -138,7 +138,7 @@ inquirer.prompt(questions).then((answers) => {
 
     // Execute figma-export command with correct working directory
     try {
-        execSync('figma-export', { cwd: projectPath, stdio: 'inherit' });
+        execSync('figma-export', {cwd: projectPath, stdio: 'inherit'});
     } catch (error) {
         console.error('Error executing figma-export:', error);
         process.exit(1);
@@ -147,7 +147,7 @@ inquirer.prompt(questions).then((answers) => {
     // If needsEmailTemplates is selected, run yarn create email in the project root
     if (needsEmailTemplates) {
         try {
-            execSync('yarn create email', { cwd: projectPath, stdio: 'inherit' });
+            execSync('yarn create email', {cwd: projectPath, stdio: 'inherit'});
         } catch (error) {
             console.error('Error running yarn create email:', error);
             process.exit(1);
@@ -191,23 +191,22 @@ inquirer.prompt(questions).then((answers) => {
 });
 
 function copyTemplateFiles(templatePath, projectPath, append = false) {
-    const filesToCreate = fs.readdirSync(templatePath);
+    const filesToCreate = fs.readdirSync(templatePath, {withFileTypes: true});
 
     filesToCreate.forEach(file => {
-        const origFilePath = path.join(templatePath, file);
-        const stats = fs.statSync(origFilePath);
+        const origFilePath = path.join(templatePath, file.name);
+        const writePath = path.join(projectPath, file.name);
 
-        if (stats.isFile()) {
+        if (file.isFile()) {
             const contents = fs.readFileSync(origFilePath, 'utf8');
-            const writePath = path.join(projectPath, file);
-            if (append && file === 'index.ts' && fs.existsSync(writePath)) {
+            if (append && file.name === 'index.ts' && fs.existsSync(writePath)) {
                 fs.appendFileSync(writePath, contents, 'utf8');
             } else {
                 fs.writeFileSync(writePath, contents, 'utf8');
             }
-        } else if (stats.isDirectory()) {
-            fs.mkdirSync(path.join(projectPath, file), { recursive: true });
-            copyTemplateFiles(path.join(templatePath, file), path.join(projectPath, file), append);
+        } else if (file.isDirectory()) {
+            fs.mkdirSync(writePath, {recursive: true});
+            copyTemplateFiles(origFilePath, writePath, append);
         }
     });
 }

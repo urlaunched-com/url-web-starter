@@ -6,6 +6,7 @@
     "@feature-sliced/eslint-config/rules/public-api",
     "@feature-sliced/eslint-config/rules/layers-slices",
     "prettier",
+    "plugin:prettier/recommended",
     "plugin:@next/next/recommended",
     "plugin:local-rules/all"
   ],
@@ -39,6 +40,7 @@
     "/public/scripts/**.js"
   ],
   "rules": {
+    "prettier/prettier": "error",
     "import/extensions": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-useless-fragment": "warn",
@@ -93,8 +95,8 @@
     "comma-dangle": [
       "warn",
       {
-        "arrays": "always-multiline",
-        "objects": "always-multiline",
+        "arrays": "never",
+        "objects": "never",
         "imports": "always-multiline",
         "exports": "always-multiline",
         "functions": "never"

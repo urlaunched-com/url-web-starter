@@ -1,5 +1,5 @@
 figma:
-  fieldId: YOUR_FIGMA_FILE_ID
+  fieldId: ep8jgShGYMP8fk2bYyaYVH
   common:
     icons: "^(ic)/([a-z0-9_]+)$"
     images: "^(img)/([a-z0-9_]+)$"

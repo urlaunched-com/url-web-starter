@@ -28,7 +28,7 @@ install:
 lint:
   stage: lint
   script:
-    - yarn lint
+    - yarn lint:fix
   dependencies:
     - install
   rules:

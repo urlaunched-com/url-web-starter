@@ -1,6 +1,6 @@
 {
   "name": "url-web-starter",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A CLI tool to generate web projects with support for landing pages, applications, and various customizable features like Schema.org, tests, and email templates.",
   "main": "bin/cli.js",
   "bin": {

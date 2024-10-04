@@ -3,8 +3,6 @@
 import Image from "next/image";
 import { FC, useState } from "react";
 
-import defaultUploadPlaceholder from "@/public/assets/icons/upload-image-placeholder.svg?url";
-
 import customImageLoader from "./custom-image-loader";
 import { ICustomImageProps } from "./custom-image.types";
 
@@ -23,18 +21,17 @@ const CustomImage: FC<ICustomImageProps> = ({ alt, title, src: currentSrc, withP
     }
   };
 
-  const src = hasPlaceholder ? defaultUploadPlaceholder : (currentSrc as string);
-  const isExternal = hasPlaceholder ? false : typeof src === "string" && src.includes("http");
+  const isExternal = hasPlaceholder ? false : typeof currentSrc === "string" && currentSrc.includes("http");
   const loader = isExternal ? customImageLoader : undefined;
 
   if (isError) {
-    console.error("Image loading error", src);
+    console.error("Image loading error", currentSrc);
   }
 
   return (
     <Image
       {...props}
-      src={src}
+      src={currentSrc}
       alt={alt}
       title={title}
       loader={loader}
